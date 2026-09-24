@@ -1,0 +1,16 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+scikit-learn>=1.5.0
+numpy>=1.26.0
+# Required for image decoding + color extraction (/api/vision/*). The "headless" build has no
+# GUI/X11 dependencies, which is what a server needs.
+opencv-python-headless>=4.9.0
+pillow>=10.0.0
+# Optional: only imported if ANTHROPIC_API_KEY is set in the environment, to give the style
+# chat real LLM-generated replies. The app runs fine without it (falls back to local phrasing).
+anthropic>=0.40.0
+# Optional: enables the PyTorch garment-category classifier at /api/vision/classify (it trains
+# itself in-process in under a second — no checkpoint file to ship). Without torch installed,
+# that endpoint automatically falls back to an OpenCV silhouette heuristic instead.
+torch>=2.2.0

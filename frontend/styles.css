@@ -1,0 +1,197 @@
+:root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --ink: #121012;
+    --ink-soft: rgba(18,16,18,0.62);
+    --ink-faint: rgba(18,16,18,0.38);
+    --maroon: #7A1128;
+    --maroon-deep: #530C1B;
+    --border: rgba(18,16,18,0.14);
+    --border-strong: rgba(18,16,18,0.28);
+    --sun: #F2A93B;
+    --coral: #F26557;
+    --sky: #3E93A6;
+    --lilac: #8C7BC7;
+    --mint: #4C9A72;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121012;
+      --surface: #1A171A;
+      --ink: #F6F3F0;
+      --ink-soft: rgba(246,243,240,0.66);
+      --ink-faint: rgba(246,243,240,0.4);
+      --maroon: #C4536A;
+      --maroon-deep: #E27E90;
+      --border: rgba(246,243,240,0.16);
+      --border-strong: rgba(246,243,240,0.3);
+      --sun: #F5BE68; --coral: #F5897B; --sky: #6BB5C7; --lilac: #A79AE0; --mint: #6FBB93;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121012;
+    --surface: #1A171A;
+    --ink: #F6F3F0;
+    --ink-soft: rgba(246,243,240,0.66);
+    --ink-faint: rgba(246,243,240,0.4);
+    --maroon: #C4536A;
+    --maroon-deep: #E27E90;
+    --border: rgba(246,243,240,0.16);
+    --border-strong: rgba(246,243,240,0.3);
+    --sun: #F5BE68; --coral: #F5897B; --sky: #6BB5C7; --lilac: #A79AE0; --mint: #6FBB93;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); box-sizing: border-box; font-size: 112.5%; } /* ~18px base — bigger, easier-to-read type across the whole app */
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* A soft, multi-hue wash behind every page (not just the landing screen) so the app doesn't
+     read as flat black/white/maroon everywhere else. Very low opacity — never fights with content. */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(38% 32% at 6% 0%, color-mix(in srgb, var(--coral) 9%, transparent), transparent 70%),
+      radial-gradient(34% 30% at 100% 8%, color-mix(in srgb, var(--sun) 10%, transparent), transparent 70%),
+      radial-gradient(38% 34% at 92% 100%, color-mix(in srgb, var(--sky) 9%, transparent), transparent 70%),
+      radial-gradient(34% 30% at 0% 92%, color-mix(in srgb, var(--lilac) 8%, transparent), transparent 70%);
+  }
+  ::selection { background: var(--maroon); color: var(--bg); }
+  .font-display { font-family: 'Archivo', sans-serif; }
+  .hairline { border-color: var(--border); }
+  .hairline-strong { border-color: var(--border-strong); }
+  .bg-surface { background: var(--surface); }
+  .bg-bg { background: var(--bg); }
+  .text-ink { color: var(--ink); }
+  .text-soft { color: var(--ink-soft); }
+  .text-faint { color: var(--ink-faint); }
+  .text-maroon { color: var(--maroon); }
+  .text-bg { color: var(--bg); } /* was missing — this is why button labels were invisible on dark fills */
+  .bg-maroon { background: var(--maroon); }
+  .border-maroon { border-color: var(--maroon); }
+
+  /* Primary buttons (bg-ink + text-bg, or bg-maroon) get a soft lift + glow on hover/focus for a more premium feel */
+  .bg-ink.text-bg, button.bg-maroon.text-bg {
+    box-shadow: 0 1px 2px rgba(18,16,18,0.08);
+    transition: transform 160ms ease, box-shadow 160ms ease, background-color 150ms ease;
+  }
+  .bg-ink.text-bg:hover, button.bg-maroon.text-bg:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px -12px rgba(122,17,40,0.45);
+  }
+  .bg-ink.text-bg:active, button.bg-maroon.text-bg:active { transform: translateY(0); }
+  a, button { font-family: inherit; }
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--maroon);
+    outline-offset: 2px;
+  }
+  input, textarea, select { background: transparent; color: var(--ink); }
+  input::placeholder, textarea::placeholder { color: var(--ink-faint); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .wrap-container { overflow-x: auto; max-width: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  .fade-in { animation: fadeIn 0.5s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-underline {
+    background-image: linear-gradient(var(--maroon), var(--maroon));
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: left bottom;
+  }
+  .spin-slow { animation: spin 14s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .chip {
+    border: 1px solid var(--border);
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  }
+  .chip[data-active="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.03; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html { height: 100%; }
+  body { min-height: 100%; }
+  .recommendation-band { background: linear-gradient(120deg, rgba(122,17,40,0.08), transparent 45%, rgba(18,16,18,0.04)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .recommendation-card { min-height: 245px; padding: 1.25rem; border: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 76%, transparent); backdrop-filter: blur(16px); transition: transform 180ms ease, border-color 180ms ease; }
+  .recommendation-card:hover { transform: translateY(-4px); border-color: var(--maroon); }
+  .mini-tag, .floating-badge { display: inline-flex; align-items: center; border: 1px solid var(--border); padding: 0.3rem 0.55rem; font-size: 0.68rem; color: var(--ink-soft); }
+  .floating-badge { border-color: var(--maroon); color: var(--maroon); background: var(--surface); transform: rotate(-2deg); }
+
+  /* Landing (logged-out) hero — playful multi-hue glow behind the editorial type */
+  .landing-glow {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(55% 50% at 12% 4%, color-mix(in srgb, var(--coral) 22%, transparent), transparent 70%),
+                radial-gradient(45% 45% at 92% 12%, color-mix(in srgb, var(--sun) 24%, transparent), transparent 70%),
+                radial-gradient(50% 45% at 50% 95%, color-mix(in srgb, var(--sky) 16%, transparent), transparent 70%),
+                radial-gradient(60% 55% at 50% 0%, color-mix(in srgb, var(--maroon) 14%, transparent), transparent 70%);
+  }
+  .glass-card {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--border);
+  }
+
+  /* Floating decorative shapes/icons used on Landing + Home hero art */
+  .float-slow { animation: floatY 6s ease-in-out infinite; }
+  .float-med { animation: floatY 4.2s ease-in-out infinite; }
+  .float-fast { animation: floatY 3.1s ease-in-out infinite; }
+  @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
+
+  .blob-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0.55;
+    animation: blobPulse 7s ease-in-out infinite;
+  }
+  @keyframes blobPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  /* Colorful little badges used to make icon tiles / chips feel playful instead of flat mono */
+  .swatch-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3rem; height: 3rem; border-radius: 999px;
+    transition: transform 200ms ease;
+  }
+  .swatch-badge:hover { transform: rotate(-6deg) scale(1.06); }
+
+  .confetti-dot { position: absolute; border-radius: 999px; opacity: 0.65; }
+
+  .hero-card-stack { position: relative; }
+  .hero-card-stack .stack-card {
+    position: absolute; inset: 0; border: 1px solid var(--border);
+    background: var(--surface); transition: transform 260ms ease, box-shadow 260ms ease;
+  }
+  .hero-card-stack:hover .stack-card { transform: translate(0,0) rotate(0deg) !important; box-shadow: 0 24px 50px -20px rgba(18,16,18,0.35); }
+
+  .tilt-card { transition: transform 260ms ease, box-shadow 260ms ease; }
+  .tilt-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 20px 40px -18px rgba(18,16,18,0.3); }
+
+  /* Canvas board — faint dot grid so free placement still feels intentional */
+  .canvas-grid {
+    background-image: radial-gradient(circle, var(--border-strong) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: -1px -1px;
+  }
+  .canvas-item { touch-action: none; }
+  .canvas-item:active { cursor: grabbing; }
+
+  /* Chat typing indicator */
+  .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-faint); animation: typingBounce 1.1s infinite ease-in-out; }
+  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
